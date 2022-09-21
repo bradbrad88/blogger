@@ -1,1 +1,29 @@
-<div>Homepage</div>
+<div class="p-5 grid grid-cols-1 gap-6 mx-auto">
+  {{#each blogs as |blog|}}
+    <a href="/blog/{{blog.id}}">
+
+      <div
+        class="group border-[1px] shadow-lg shadow-zinc-400 rounded-lg overflow-hidden hover:scale-[1.01] transition-all"
+      >
+        <div
+          class="flex justify-between bg-cyan-700 group-hover:bg-cyan-600 text-white text-xl p-2 transition-all"
+        >
+          <h2 class="text-xl">{{blog.title}}</h2>
+          <p class="text-base">
+            Posted by
+            {{blog.author.username}}
+            on
+            <time datetime="{{displayTime blog.createdAt}}">
+              {{displayTime blog.createdAt}}
+            </time>
+          </p>
+
+        </div>
+        <div class="p-2 text-xl mb-2">
+          {{blog.author.username}}
+          {{blog.text}}
+        </div>
+      </div>
+    </a>
+  {{/each}}
+</div>
