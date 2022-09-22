@@ -1,20 +1,14 @@
 const router = require("express").Router();
-const { Blog, User, Comment } = require("../model");
+const { authRender } = require("../utils/auth");
+const apiRoutes = require("./api");
+const homeRoutes = require("./homeRoutes");
+const protectedRoutes = require("./protectedRoutes");
 
-router.get("/", async (req, res) => {
-  const blogData = await Blog.findAll({
-    include: [{ model: User, as: "author" }, { model: Comment }],
-  });
-  const blogs = blogData.map(model => model.get({ plain: true }));
-  res.render("homepage", { blogs });
-});
-
-router.get("/signup", async (req, res) => {
-  res.render("signup");
-});
-
-router.get("/dashboard", async (req, res) => {
-  res.render("dashboard");
-});
+// All api routes
+router.use("/api", apiRoutes);
+// Routes available regardless of auth status
+router.use("/", homeRoutes);
+// Any route that should redirect to login/signup if not logged in
+router.use("/", authRender, protectedRoutes);
 
 module.exports = router;
