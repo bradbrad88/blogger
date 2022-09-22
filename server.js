@@ -5,6 +5,7 @@ const exphbs = require("express-handlebars");
 const routes = require("./controllers");
 const errorHandler = require("./error/errorhandler");
 const helpers = require("./utils/helpers");
+const loggedIn = require("./utils/logged-in");
 
 const sequelize = require("./config/connection");
 
@@ -33,7 +34,7 @@ app.set("view engine", "handlebars");
 
 // Add express-session and store as Express.js middleware
 app.use(session(sess));
-
+app.use(loggedIn);
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
