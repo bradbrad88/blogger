@@ -1,0 +1,29 @@
+<div class="p-5">
+  <form id="blog-form">
+    <div class="flex flex-col">
+      <label for="title" class="font-bold">Title</label>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        value="{{title}}"
+        class="border-2 border-zinc-300 rounded-md p-2"
+      />
+    </div>
+    <div class="flex flex-col">
+      <label for="text" class="font-bold">Blog Entry:</label>
+      <textarea
+        name="text"
+        id="text"
+        cols="30"
+        rows="20"
+        class="border-2 border-zinc-300 rounded-md p-2"
+      >{{text}}</textarea>
+    </div>
+    <button
+      class="rounded-md border-none outline-none text-white bg-green-700 hover:bg-green-600 transition-all py-2 px-5 mt-5"
+      type="submit"
+    >{{#if edit_mode}}Save Changes{{else}}Submit{{/if}}</button>
+  </form>
+</div>
+<script src="/js/new-blog.js"></script>
