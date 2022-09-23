@@ -1,0 +1,17 @@
+<div class="p-5">
+  <a href="/blog">
+    <button
+      id="new-blog"
+      class="bg-green-700 text-white hover:bg-green-600 transition-all rounded-md py-2 px-6 mb-5"
+    >
+      Create a Blog
+    </button>
+  </a>
+  <div class="grid grid-cols-1 gap-6">
+    {{#each blogs as |blog|}}
+      <a href="/blog/{{blog.id}}">
+        {{> blog-partial}}
+      </a>
+    {{/each}}
+  </div>
+</div>
