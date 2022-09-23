@@ -6,7 +6,6 @@ User.hasMany(Blog, { foreignKey: "user_id", onDelete: "CASCADE", onUpdate: "CASC
 
 Blog.belongsTo(User, {
   foreignKey: "user_id",
-  as: "author",
 });
 
 User.hasMany(Comment, {
