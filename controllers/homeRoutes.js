@@ -6,7 +6,8 @@ const HandledError = require("../error/Error");
 router.get("/", async (req, res, next) => {
   try {
     const blogData = await Blog.findAll({
-      include: [{ model: User, as: "author" }, { model: Comment }],
+      include: [{ model: User }, { model: Comment }],
+      order: [["updatedAt", "desc"]],
     });
     const blogs = blogData.map(model => model.get({ plain: true }));
     res.render("homepage", { blogs });
@@ -25,11 +26,14 @@ router.get("/signup", async (req, res, next) => {
 
 router.get("/blog/:id", async (req, res, next) => {
   try {
-    const blog = await Blog.findByPk(req.params.id, {
-      include: [{ model: Comment, include: [{ model: User }] }],
+    const { id } = req.params;
+    const { user_id } = req.session;
+    const blogData = await Blog.findByPk(id, {
+      include: [{ model: Comment, include: [{ model: User }] }, { model: User }],
     });
-    if (!blog) next(HandledError.notFound());
-    res.render("blog", { ...blog.get({ plain: true }) });
+    if (!blogData) next(HandledError.notFound());
+    const blog = blogData.get({ plain: true });
+    res.render("blog", { ...blog, edit_mode: blog.user_id === user_id, disable_hover: true });
   } catch (error) {
     next(error);
   }
