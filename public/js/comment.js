@@ -5,6 +5,7 @@ if (form)
   form.addEventListener("submit", async e => {
     e.preventDefault();
     const content = comment.value;
+    if (!content) return;
     const response = await fetch(`/api/blog/${id}/comment`, {
       method: "POST",
       body: JSON.stringify({ content }),
