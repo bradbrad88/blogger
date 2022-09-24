@@ -1,45 +1,71 @@
+{{#if edit_mode}}
+  <div class="flex justify-end gap-5 p-5 pb-0">
+    <a href="/blog/{{id}}/edit">
+      <button
+        id="edit"
+        class="text-white bg-yellow-600 hover:bg-yellow-500 p-2 px-5 rounded-md transition-all"
+      >Edit</button>
+
+    </a>
+    <button
+      id="delete"
+      class="text-white bg-rose-700 hover:bg-rose-600 p-2 px-5 rounded-md transition-all"
+    >Delete</button>
+  </div>
+{{/if}}
 <div class="p-5 grid grid-cols-1 gap-6 mx-auto">
   {{>blog-partial}}
   <div class="rounded-lg shadow-lg shadow-zinc-400 overflow-hidden">
-    <div class="bg-indigo-600 text-white p-3 text-xl">
+    <div class="bg-indigo-600 text-white p-2 text-lg">
       <h3>Comments</h3>
     </div>
-    <div class="grid grid-cols1 gap-3 p-3">
-      {{#each comments as |comment|}}
-        <div class="">
-          <h3 class="font-bold">{{comment.user.username}}</h3>
-          <p class="text-sm"><time datetime="{{displayTime comment.createdAt}}">{{displayTime comment.createdAt}}</time></p>
+    {{#if comments.length}}
+      <div class="grid grid-cols1 gap-3 p-3 border-indigo-200">
+        {{#each comments as |comment|}}
+          <div class="">
+            <h3 class="font-bold">{{comment.user.username}}</h3>
+            <p class="text-sm"><time datetime="{{displayTime comment.createdAt}}">{{displayTime
+                  comment.createdAt
+                }}</time></p>
             <p class="pl-3 pt-1">
               {{comment.content}}
             </p>
-        </div>
-      {{/each}}
-    </div>
-    <div class="p-3 border-t-2 border-indigo-200">
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+    <div class="p-3">
       {{#if logged_in}}
-      <form id="comment-form" class="flex flex-col gap-3">
-        <div class="flex flex-col">
-          <label class="font-bold" for="comment-input">Write a new comment</label>
-          <textarea
-            placeholder="Compliment goes here..."
-            class="resize-none border-zinc-300 border-[1px] p-2"
-            rows="4"
-            type="text"
-            name="content"
-            id="comment-input"
-          ></textarea>
-        </div>
-        <button class="border-2 border-indigo-200 px-5 py-2 rounded-lg max-w-md w-full self-center">
-          Submit
-        </button>
-      </form>
+        <form id="comment-form" class="flex flex-col gap-3">
+          <div class="flex flex-col">
+            <label class="font-bold" for="comment-input">{{#if comments.length}}Write a new
+                comment{{else}}Be the first to leave a comment{{/if}}</label>
+            <textarea
+              placeholder="Compliment goes here..."
+              class="resize-none border-zinc-300 border-[1px] p-2"
+              rows="4"
+              type="text"
+              name="content"
+              id="comment-input"
+            ></textarea>
+          </div>
+          <button
+            class="text-white font-bold bg-indigo-600 hover:bg-indigo-500 px-5 py-2 rounded-lg max-w-md w-full self-center transition-all"
+          >
+            Submit
+          </button>
+        </form>
       {{else}}
         <div>
           <p class="mb-3">Login to leave a comment</p>
-          <a href="/signup" class="bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-lg px-5 py-2">Login</a>
+          <a
+            href="/signup"
+            class="text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg text-lg px-5 py-2 transition-all"
+          >Login</a>
         </div>
       {{/if}}
     </div>
   </div>
 </div>
 <script src="/js/comment.js"></script>
+<script src="/js/update-blog.js"></script>
