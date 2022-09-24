@@ -21,10 +21,17 @@ const hbs = exphbs.create({
 
 // Configure and link a session object with the sequelize store
 const sess = {
-  secret: "Extra secret secret",
-  cookie: {},
+  secret: "Extra super secret",
+  cookie: {
+    // Logout if idle for more than 2hrs
+    // ----hr  min  sec   ms
+    maxAge: 2 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
   resave: false,
-  saveUninitialized: true,
+  // Set to rolling so that expiry timer resets on activity
+  rolling: true,
+  saveUninitialized: false,
   store: new SequelizeStore({
     db: sequelize,
   }),
@@ -36,7 +43,6 @@ app.set("view engine", "handlebars");
 app.use(session(sess));
 app.use(loggedIn);
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.use(routes);
