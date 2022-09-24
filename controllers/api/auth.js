@@ -7,8 +7,6 @@ const router = require("express").Router();
 router.post("/", async (req, res, next) => {
   try {
     const user = await User.create(req.body);
-    console.log(user);
-
     req.session.save(err => {
       if (err) return next(err);
       req.session.user_id = user.id;

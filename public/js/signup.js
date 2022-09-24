@@ -29,6 +29,7 @@ signupForm.addEventListener("submit", async e => {
   if (response.ok) {
     location.href = "/dashboard";
   } else {
-    alert("Failed to signup a new user");
+    const { error } = await response.json();
+    alert(error);
   }
 });

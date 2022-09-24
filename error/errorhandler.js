@@ -10,6 +10,8 @@ const errorHandler = (err, req, res, next) => {
           return "Email provided is not a valid format";
         case "len":
           return `Password must be at least ${error.validatorArgs[0]} characters`;
+        case "not_unique":
+          return "Username is not unique";
         default:
           return "";
       }
