@@ -12,7 +12,6 @@ loginForm.addEventListener("submit", async e => {
   };
   const response = await fetch("/api/auth/login", params);
   if (response.ok) {
-    location.reload();
     location.href = "/dashboard";
   }
 });
@@ -29,5 +28,4 @@ signupForm.addEventListener("submit", async e => {
     headers: { "Content-Type": "application/json" },
   };
   const response = await fetch("/api/auth/", params);
-  console.log(response);
 });
